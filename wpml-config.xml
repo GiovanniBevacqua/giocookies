@@ -1,0 +1,18 @@
+<wpml-config>
+	<admin-texts>
+		<key name="giocookies_title" />
+		<key name="giocookies_message" />
+		<key name="giocookies_label_reject" />
+		<key name="giocookies_label_accept" />
+		<key name="giocookies_label_save" />
+		<key name="giocookies_label_customize" />
+		<key name="giocookies_label_necessary" />
+		<key name="giocookies_label_analytics" />
+		<key name="giocookies_label_marketing" />
+		<key name="giocookies_desc_necessary" />
+		<key name="giocookies_desc_analytics" />
+		<key name="giocookies_desc_marketing" />
+		<key name="giocookies_privacy_url" />
+		<key name="giocookies_cookie_url" />
+	</admin-texts>
+</wpml-config>

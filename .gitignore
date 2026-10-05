@@ -1,0 +1,17 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Dependencies and build output
+/vendor/
+/node_modules/
+/build/
+*.zip
+
+# Logs and local environment
+*.log
+.env
+.phpunit.result.cache

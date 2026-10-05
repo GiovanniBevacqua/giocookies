@@ -1,0 +1,55 @@
+name: Bug report
+description: Something in GioCookies does not work as expected.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please do not include passwords, license keys or other private data.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to ...
+        2. Click on ...
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: input
+    id: plugin-version
+    attributes:
+      label: GioCookies version
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+  - type: input
+    id: wp-version
+    attributes:
+      label: WordPress version
+    validations:
+      required: true
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Other relevant details
+      description: Theme, active plugins, hosting, error log entries, screenshots.

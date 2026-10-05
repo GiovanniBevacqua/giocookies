@@ -1,0 +1,373 @@
+/*
+ * GioCookies — neutral styles driven by CSS custom properties.
+ * Themes can override the --giocookies-* variables on
+ * .giocookies-banner, .giocookies-bubble without touching anything else.
+ */
+:root {
+    --giocookies-bg: #FFFFFF;
+    --giocookies-text: #1D1D1F;
+    --giocookies-muted: #5F6168;
+    --giocookies-border: #E2E2E8;
+    --giocookies-surface: #F5F5F7;
+    --giocookies-accent: #2F5BD3;
+    --giocookies-accent-hover: #2348AE;
+    --giocookies-accent-text: #FFFFFF;
+    --giocookies-radius: 16px;
+    --giocookies-button-radius: 999px;
+    --giocookies-font: inherit;
+    --giocookies-shadow: 0 24px 60px -20px rgba(0, 0, 0, .28), 0 2px 8px rgba(0, 0, 0, .06);
+    --giocookies-z: 9998;
+}
+
+.giocookies-banner,
+.giocookies-bubble {
+    box-sizing: border-box;
+    font-family: var(--giocookies-font);
+}
+
+.giocookies-banner *,
+.giocookies-banner *::before,
+.giocookies-banner *::after {
+    box-sizing: border-box;
+}
+
+.giocookies-banner {
+    display: none;
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: var(--giocookies-z);
+    width: min(440px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    padding: 24px;
+    background: var(--giocookies-bg);
+    color: var(--giocookies-text);
+    border: 1px solid var(--giocookies-border);
+    border-radius: var(--giocookies-radius);
+    box-shadow: var(--giocookies-shadow);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.giocookies-banner.is-visible {
+    display: block;
+}
+
+.giocookies-banner .giocookies-title {
+    margin: 0;
+    color: var(--giocookies-text);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+}
+
+.giocookies-banner .giocookies-title:focus {
+    outline: none;
+}
+
+.giocookies-banner .giocookies-message {
+    margin: 8px 0 0;
+    color: var(--giocookies-muted);
+    font-size: 14px;
+}
+
+.giocookies-preferences {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.giocookies-preferences[hidden] {
+    display: none;
+}
+
+.giocookies-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 14px;
+    background: var(--giocookies-surface);
+    border-radius: 12px;
+}
+
+.giocookies-option__text {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.giocookies-option__text strong {
+    color: var(--giocookies-text);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.giocookies-option__text span {
+    color: var(--giocookies-muted);
+    font-size: 13px;
+}
+
+/* Native checkbox styled as a switch */
+.giocookies-switch {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    flex-shrink: 0;
+    width: 44px;
+    height: 26px;
+    margin: 0;
+    padding: 0;
+    background: #C9C9D1;
+    border: 0;
+    border-radius: 13px;
+    cursor: pointer;
+    transition: background-color .2s ease;
+}
+
+.giocookies-switch::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+    transition: transform .2s ease;
+}
+
+.giocookies-switch:checked {
+    background: var(--giocookies-accent);
+}
+
+.giocookies-switch:checked::before {
+    transform: translateX(18px);
+}
+
+.giocookies-switch:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+.giocookies-switch:focus-visible,
+.giocookies-btn:focus-visible,
+.giocookies-bubble:focus-visible,
+.giocookies-links a:focus-visible {
+    outline: 3px solid var(--giocookies-accent);
+    outline-offset: 2px;
+}
+
+.giocookies-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+/* Reject and Accept have the same visual weight */
+.giocookies-banner .giocookies-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    margin: 0;
+    padding: 10px 18px;
+    background: var(--giocookies-accent);
+    color: var(--giocookies-accent-text);
+    border: 0;
+    border-radius: var(--giocookies-button-radius);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.giocookies-banner .giocookies-btn:hover {
+    background: var(--giocookies-accent-hover);
+    color: var(--giocookies-accent-text);
+}
+
+.giocookies-banner .giocookies-btn--outline {
+    background: transparent;
+    color: var(--giocookies-accent);
+    box-shadow: inset 0 0 0 1.5px var(--giocookies-accent);
+}
+
+.giocookies-banner .giocookies-btn--outline:hover {
+    background: var(--giocookies-surface);
+    color: var(--giocookies-accent-hover);
+}
+
+.giocookies-banner .giocookies-btn--link {
+    grid-column: 1 / -1;
+    min-height: 36px;
+    background: transparent;
+    color: var(--giocookies-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.giocookies-banner .giocookies-btn--link:hover {
+    background: transparent;
+    color: var(--giocookies-accent-hover);
+}
+
+.giocookies-banner .giocookies-btn[hidden] {
+    display: none;
+}
+
+.giocookies-banner.is-customizing #giocookies-accept-selected {
+    grid-column: 1 / -1;
+}
+
+.giocookies-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 12px 0 0;
+    font-size: 13px;
+}
+
+.giocookies-links a {
+    color: var(--giocookies-muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.giocookies-links a:hover {
+    color: var(--giocookies-text);
+}
+
+.giocookies-bubble {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: var(--giocookies-z);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--giocookies-bg);
+    color: var(--giocookies-text);
+    border: 1px solid var(--giocookies-border);
+    border-radius: 50%;
+    box-shadow: 0 6px 20px -6px rgba(0, 0, 0, .25);
+    cursor: pointer;
+}
+
+.giocookies-bubble:hover {
+    background: var(--giocookies-surface);
+    color: var(--giocookies-accent);
+}
+
+.giocookies-banner.is-visible ~ .giocookies-bubble,
+.giocookies-bubble[aria-expanded="true"] {
+    display: none;
+}
+
+/* Position: bottom right card */
+.giocookies-banner.giocookies-pos-bottom-right,
+.giocookies-bubble.giocookies-pos-bottom-right {
+    left: auto;
+    right: 16px;
+}
+
+/* Position: full-width bottom bar */
+.giocookies-banner.giocookies-pos-bottom-bar {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 85vh;
+    border-width: 1px 0 0;
+    border-radius: var(--giocookies-radius) var(--giocookies-radius) 0 0;
+    padding-left: max(24px, calc((100% - 1200px) / 2));
+    padding-right: max(24px, calc((100% - 1200px) / 2));
+}
+
+@media (min-width: 900px) {
+    .giocookies-banner.giocookies-pos-bottom-bar.is-visible:not(.is-customizing) {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: 32px;
+        align-items: center;
+    }
+    .giocookies-banner.giocookies-pos-bottom-bar:not(.is-customizing) > * {
+        grid-column: 1;
+    }
+    .giocookies-banner.giocookies-pos-bottom-bar:not(.is-customizing) .giocookies-actions {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        grid-template-columns: repeat(2, minmax(140px, auto));
+        margin-top: 0;
+    }
+    .giocookies-banner.giocookies-pos-bottom-bar.is-customizing .giocookies-preferences {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .giocookies-banner.giocookies-pos-bottom-bar.is-customizing .giocookies-actions {
+        grid-template-columns: repeat(3, minmax(140px, auto));
+        justify-content: end;
+    }
+    .giocookies-banner.giocookies-pos-bottom-bar.is-customizing #giocookies-accept-selected {
+        grid-column: auto;
+    }
+}
+
+.giocookies-sr {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .giocookies-banner {
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        width: auto;
+        max-height: 85vh;
+        padding: 20px;
+    }
+    .giocookies-bubble {
+        left: 12px;
+        bottom: 12px;
+    }
+    .giocookies-banner.giocookies-pos-bottom-right {
+        left: 8px;
+        right: 8px;
+    }
+    .giocookies-bubble.giocookies-pos-bottom-right {
+        left: auto;
+        right: 12px;
+    }
+    .giocookies-banner.giocookies-pos-bottom-bar {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .giocookies-switch,
+    .giocookies-switch::before,
+    .giocookies-btn {
+        transition: none;
+    }
+}

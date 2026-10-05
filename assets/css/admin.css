@@ -1,0 +1,18 @@
+/* GioCookies admin */
+.giocookies-admin .form-table td .description {
+    max-width: 640px;
+}
+.giocookies-page-or-url {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+.giocookies-admin .wp-list-table .column-consent_date {
+    width: 16%;
+}
+.giocookies-admin .wp-list-table .column-analytics,
+.giocookies-admin .wp-list-table .column-marketing,
+.giocookies-admin .wp-list-table .column-consent_version {
+    width: 9%;
+}

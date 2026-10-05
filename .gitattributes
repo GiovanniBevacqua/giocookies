@@ -1,0 +1,15 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.mo binary
+
+# Excluded from `git archive` / GitHub release zips: the archive contains only the plugin.
+/.github           export-ignore
+/.wordpress-org    export-ignore
+/.gitattributes    export-ignore
+/.gitignore        export-ignore
+/.editorconfig     export-ignore
+/CHANGELOG.md      export-ignore
+/CONTRIBUTING.md   export-ignore
+/SECURITY.md       export-ignore
+/README.md         export-ignore
