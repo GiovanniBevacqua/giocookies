@@ -3,7 +3,7 @@
  * Plugin Name:       GioCookies
  * Plugin URI:        https://giosuite.com/giocookies
  * Description:       Lightweight cookie consent banner for Google Consent Mode v2, Google Tag Manager and the WP Consent API, with script blocking and an anonymized consent log.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            Giovanni Bevacqua
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'GIOCOOKIES_PLUGIN_FILE', __FILE__ );
-define( 'GIOCOOKIES_VERSION', '1.0.0' );
+define( 'GIOCOOKIES_VERSION', '1.0.1' );
 define( 'GIOCOOKIES_SCHEMA_VERSION', 1 );
 define( 'GIOCOOKIES_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GIOCOOKIES_URL', plugin_dir_url( __FILE__ ) );

@@ -220,6 +220,14 @@ class ConsentManager {
 						<input type="checkbox" role="switch" id="giocookies-<?php echo esc_attr( $key ); ?>" class="giocookies-switch"<?php echo 'necessary' === $key ? ' checked disabled' : ''; ?>>
 					</div>
 				<?php endforeach; ?>
+				<?php
+				/**
+				 * Fires at the end of the preferences panel, after the category switches.
+				 *
+				 * @since 1.0.1
+				 */
+				do_action( 'giocookies_preferences_end' );
+				?>
 			</div>
 
 			<div class="giocookies-actions">

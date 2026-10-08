@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, consent mode, cookie banner, privacy
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,10 @@ Filters:
 * `giocookies_client_ip` – the visitor IP used for rate limiting and the anonymized log (useful behind a trusted reverse proxy).
 * `giocookies_rate_limit` – maximum consent saves per IP every 10 minutes (default 20, 0 disables).
 * `giocookies_text` – change any banner text before output (`$value`, `$option_name`), for example per language.
+
+Actions:
+
+* `giocookies_preferences_end` – print extra content at the end of the preferences panel, after the category switches.
 
 JavaScript:
 
@@ -147,6 +151,9 @@ Available properties: `--giocookies-bg`, `-text`, `-muted`, `-border`, `-surface
 3. The consent log with anonymized IP addresses, filters and CSV export.
 
 == Changelog ==
+
+= 1.0.1 =
+* New: `giocookies_preferences_end` action to add content at the end of the preferences panel.
 
 = 1.0.0 =
 * Initial release.

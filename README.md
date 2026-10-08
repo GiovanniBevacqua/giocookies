@@ -67,6 +67,7 @@ or trigger tags on the `cookie_consent_update` event.
 | `giocookies_cookie_days` | filter | Lifetime of the consent cookies (default 365). |
 | `giocookies_client_ip` | filter | Visitor IP used for rate limiting and the anonymized log (behind a trusted proxy). |
 | `giocookies_rate_limit` | filter | Maximum consent saves per IP every 10 minutes (default 20, `0` disables). |
+| `giocookies_preferences_end` | action | Print extra content at the end of the preferences panel, after the category switches. |
 
 ```html
 <!-- Runs only after the visitor accepts Marketing cookies -->
