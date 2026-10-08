@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, consent mode, cookie banner, privacy
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,6 +25,7 @@ It does a few things and tries to do them well:
 * **Accessible.** Dialog semantics, keyboard support, visible focus, native switches (`role="switch"`), reduced-motion support. "Reject all" and "Accept all" have the same visual weight.
 * **Lightweight.** One small CSS file and one small dependency-free JavaScript file. No external requests, no tracking, no account, no upsell.
 * **Easy to theme.** Neutral styles driven by CSS custom properties (`--giocookies-*`), plus accent and button text colors in the settings.
+* **Tidy settings.** Tabbed settings with a live preview of the banner, a setup checklist and the decisions of the last 30 days.
 
 = What GioCookies does not do =
 
@@ -148,12 +149,11 @@ Available properties: `--giocookies-bg`, `-text`, `-muted`, `-border`, `-surface
 
 1. The default banner: equal "Reject all" and "Accept all" buttons, policy links and the Customize option.
 2. Customize view with the Necessary, Analytics and Marketing switches.
-3. The consent log with anonymized IP addresses, filters and CSV export.
+3. Settings overview: banner switch, decisions of the last 30 days and setup checklist.
+4. Banner texts with the live preview.
+5. The consent log with anonymized IP addresses, filters and CSV export.
 
 == Changelog ==
-
-= 1.0.1 =
-* New: `giocookies_preferences_end` action to add content at the end of the preferences panel.
 
 = 1.0.0 =
 * Initial release.

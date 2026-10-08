@@ -1,18 +1,650 @@
 /* GioCookies admin */
-.giocookies-admin .form-table td .description {
-    max-width: 640px;
+
+/* ---------- Layout ---------- */
+
+.giocookies-admin {
+    max-width: 1280px;
 }
+
+.giocookies-admin__title {
+    margin-bottom: 12px;
+}
+
+.giocookies-tabs {
+    margin-bottom: 20px;
+}
+
+/* Without JavaScript every panel is shown in a single column: the tabs are not needed. */
+.giocookies-admin:not(.giocookies-js) .giocookies-tabs {
+    display: none;
+}
+
+.giocookies-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.giocookies-layout.has-preview {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+}
+
+.giocookies-layout:not(.has-preview) .giocookies-preview {
+    display: none;
+}
+
+.giocookies-admin:not(.giocookies-js) .giocookies-preview {
+    display: none;
+}
+
+.giocookies-panels {
+    min-width: 0;
+}
+
+.giocookies-panel + .giocookies-panel {
+    margin-top: 32px;
+}
+
+.giocookies-js .giocookies-panel + .giocookies-panel {
+    margin-top: 0;
+}
+
+.giocookies-panel[hidden] {
+    display: none;
+}
+
+/* The tab label already names the panel; the heading is for no-JS and screen readers. */
+.giocookies-js .giocookies-panel__heading {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+.giocookies-panel__intro {
+    max-width: 720px;
+    margin: 0 0 16px;
+    color: #50575E;
+    font-size: 14px;
+}
+
+.giocookies-grid {
+    display: grid;
+    gap: 16px;
+}
+
+.giocookies-grid--2 {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* ---------- Cards ---------- */
+
+.giocookies-card {
+    margin: 0 0 16px;
+    padding: 20px 24px;
+    background: #FFFFFF;
+    border: 1px solid #DCDCDE;
+    border-radius: 8px;
+}
+
+.giocookies-grid > .giocookies-card {
+    margin-bottom: 0;
+}
+
+.giocookies-grid + .giocookies-card {
+    margin-top: 16px;
+}
+
+.giocookies-card h3,
+.giocookies-card legend h3 {
+    margin: 0 0 12px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.giocookies-card fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.giocookies-card__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-bottom: 12px;
+}
+
+.giocookies-card__head h3 {
+    margin: 0;
+}
+
+.giocookies-card .description {
+    max-width: 680px;
+}
+
+.giocookies-pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.giocookies-pill.is-on {
+    background: #E6F4EA;
+    color: #1E6A3A;
+}
+
+.giocookies-pill.is-off {
+    background: #F0F0F1;
+    color: #50575E;
+}
+
+/* ---------- Fields ---------- */
+
+.giocookies-field {
+    margin: 0 0 16px;
+}
+
+.giocookies-field:last-child {
+    margin-bottom: 0;
+}
+
+.giocookies-field.is-compact {
+    margin: 0;
+}
+
+.giocookies-field__label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.giocookies-field__control input[type="text"],
+.giocookies-field__control input[type="url"],
+.giocookies-field__control textarea {
+    max-width: 100%;
+}
+
+.giocookies-field--text .regular-text,
+.giocookies-field--textarea textarea {
+    width: 100%;
+}
+
+.giocookies-field .description {
+    margin-top: 6px;
+}
+
+.giocookies-reset {
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+.giocookies-reset[hidden] {
+    display: none;
+}
+
 .giocookies-page-or-url {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     align-items: center;
 }
+
+/* Switch built on a native checkbox */
+.giocookies-toggle {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.giocookies-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+}
+
+.giocookies-toggle__track {
+    position: relative;
+    flex-shrink: 0;
+    width: 40px;
+    height: 22px;
+    margin-top: 1px;
+    background: #A7AAAD;
+    border-radius: 11px;
+    transition: background-color .15s ease;
+}
+
+.giocookies-toggle__track::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    transition: transform .15s ease;
+}
+
+.giocookies-toggle input:checked + .giocookies-toggle__track {
+    background: var(--wp-admin-theme-color, #2271B1);
+}
+
+.giocookies-toggle input:checked + .giocookies-toggle__track::before {
+    transform: translateX(18px);
+}
+
+.giocookies-toggle input:focus-visible + .giocookies-toggle__track {
+    box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 4px var(--wp-admin-theme-color, #2271B1);
+}
+
+.giocookies-toggle__label {
+    line-height: 1.5;
+}
+
+.giocookies-field.is-compact .giocookies-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+}
+
+/* ---------- Overview ---------- */
+
+.giocookies-checklist {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+}
+
+.giocookies-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.giocookies-checklist .dashicons {
+    flex-shrink: 0;
+}
+
+.giocookies-checklist .is-ok .dashicons {
+    color: #1E8A4C;
+}
+
+.giocookies-checklist .is-todo .dashicons {
+    color: #B26200;
+}
+
+.giocookies-checklist a {
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.giocookies-empty {
+    margin: 0;
+    color: #646970;
+}
+
+.giocookies-stats__total {
+    margin: 0 0 12px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.giocookies-stats {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+}
+
+.giocookies-stats__row {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr) 84px;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.giocookies-stats__bar {
+    height: 8px;
+    background: #F0F0F1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.giocookies-stats__bar span {
+    display: block;
+    height: 100%;
+    background: var(--wp-admin-theme-color, #2271B1);
+    border-radius: 4px;
+}
+
+.giocookies-stats__row.is-declined .giocookies-stats__bar span {
+    background: #8C8F94;
+}
+
+.giocookies-stats__row.is-custom .giocookies-stats__bar span {
+    background: #72AEE6;
+}
+
+.giocookies-stats__value {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.giocookies-stats__value small {
+    color: #646970;
+}
+
+/* ---------- Categories ---------- */
+
+.giocookies-category__fields {
+    display: grid;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #F0F0F1;
+}
+
+.giocookies-category.is-disabled .giocookies-category__fields {
+    opacity: .5;
+}
+
+/* ---------- Appearance ---------- */
+
+.giocookies-positions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.giocookies-position {
+    position: relative;
+    display: grid;
+    gap: 8px;
+    padding: 10px;
+    border: 1px solid #DCDCDE;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.giocookies-position input {
+    position: absolute;
+    opacity: 0;
+}
+
+.giocookies-position:has(input:checked) {
+    border-color: var(--wp-admin-theme-color, #2271B1);
+    box-shadow: 0 0 0 1px var(--wp-admin-theme-color, #2271B1);
+}
+
+.giocookies-position:has(input:focus-visible) {
+    outline: 2px solid var(--wp-admin-theme-color, #2271B1);
+    outline-offset: 2px;
+}
+
+.giocookies-position__thumb {
+    position: relative;
+    display: block;
+    height: 72px;
+    background: #F6F7F7;
+    border-radius: 4px;
+}
+
+.giocookies-position__thumb span {
+    position: absolute;
+    bottom: 8px;
+    width: 42%;
+    height: 26px;
+    background: #FFFFFF;
+    border: 1px solid #C3C4C7;
+    border-radius: 4px;
+}
+
+.giocookies-position__thumb.is-bottom-left span {
+    left: 8px;
+}
+
+.giocookies-position__thumb.is-bottom-right span {
+    right: 8px;
+}
+
+.giocookies-position__thumb.is-bottom-bar span {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: 18px;
+    border-width: 1px 0 0;
+    border-radius: 0 0 4px 4px;
+}
+
+.giocookies-position__label {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ---------- Advanced ---------- */
+
+.giocookies-steps,
+.giocookies-list {
+    margin: 0 0 12px 1.4em;
+}
+
+.giocookies-list {
+    margin-left: 0;
+    list-style: none;
+}
+
+.giocookies-steps li,
+.giocookies-list li {
+    margin-bottom: 8px;
+}
+
+.giocookies-code {
+    margin: 0 0 12px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    background: #F6F7F7;
+    border: 1px solid #DCDCDE;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.giocookies-code code {
+    padding: 0;
+    background: none;
+}
+
+/* ---------- Save bar ---------- */
+
+.giocookies-savebar {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin-top: 8px;
+    padding: 12px 0;
+    background: #F0F0F1;
+    border-top: 1px solid #DCDCDE;
+}
+
+/* ---------- Live preview ---------- */
+
+.giocookies-preview {
+    position: sticky;
+    top: 48px;
+}
+
+.giocookies-preview__title {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: #646970;
+}
+
+.giocookies-preview__frame {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 16px;
+    min-height: 420px;
+    padding: 16px;
+    overflow: hidden;
+    background: #F6F7F7;
+    border: 1px solid #DCDCDE;
+    border-radius: 8px;
+}
+
+.giocookies-preview__frame.is-bottom-right {
+    align-items: flex-end;
+}
+
+.giocookies-preview__frame.is-bottom-bar {
+    align-items: stretch;
+    padding: 16px 0 0;
+}
+
+.giocookies-preview__page {
+    display: grid;
+    gap: 8px;
+    align-self: stretch;
+    margin-bottom: auto;
+    padding: 0 16px;
+}
+
+.giocookies-preview__page span {
+    display: block;
+    height: 10px;
+    background: #E0E0E3;
+    border-radius: 5px;
+}
+
+.giocookies-preview__page span:nth-child(1) {
+    width: 55%;
+    height: 16px;
+}
+
+.giocookies-preview__page span:nth-child(3) {
+    width: 80%;
+}
+
+.giocookies-preview__page span:nth-child(4) {
+    width: 65%;
+}
+
+.giocookies-preview .giocookies-preview__banner {
+    position: static;
+    display: block;
+    width: 92%;
+    max-height: none;
+    overflow: visible;
+    zoom: .86;
+}
+
+.giocookies-preview__frame.is-bottom-bar .giocookies-preview__banner {
+    width: auto;
+    border-width: 1px 0 0;
+    border-radius: var(--giocookies-radius) var(--giocookies-radius) 0 0;
+}
+
+.giocookies-preview .giocookies-title {
+    margin: 0;
+    color: var(--giocookies-text);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+/* Collapsed banner outside the Categories tab, as visitors see it first. */
+.giocookies-preview__frame:not(.is-customizing) .giocookies-preferences,
+.giocookies-preview__frame:not(.is-customizing) .giocookies-preview__save,
+.giocookies-preview__frame.is-customizing .giocookies-preview__customize {
+    display: none;
+}
+
+.giocookies-preview__frame.is-customizing .giocookies-preview__save {
+    grid-column: 1 / -1;
+}
+
+.giocookies-preview .giocookies-option[hidden] {
+    display: none;
+}
+
+.giocookies-preview .giocookies-switch {
+    display: block;
+    cursor: default;
+}
+
+.giocookies-preview .giocookies-switch.is-checked {
+    background: var(--giocookies-accent);
+    opacity: .55;
+}
+
+.giocookies-preview .giocookies-switch.is-checked::before {
+    transform: translateX(18px);
+}
+
+.giocookies-preview .giocookies-btn {
+    cursor: default;
+}
+
+.giocookies-preview .giocookies-links span {
+    color: var(--giocookies-muted);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* ---------- Consent log ---------- */
+
 .giocookies-admin .wp-list-table .column-consent_date {
     width: 16%;
 }
+
 .giocookies-admin .wp-list-table .column-analytics,
 .giocookies-admin .wp-list-table .column-marketing,
 .giocookies-admin .wp-list-table .column-consent_version {
     width: 9%;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 1100px) {
+    .giocookies-layout.has-preview {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .giocookies-preview {
+        position: static;
+        order: -1;
+    }
+    .giocookies-preview__frame {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .giocookies-card {
+        padding: 16px;
+    }
+    .giocookies-stats__row {
+        grid-template-columns: 90px minmax(0, 1fr) 72px;
+    }
+    .giocookies-checklist li {
+        flex-wrap: wrap;
+    }
 }

@@ -234,6 +234,30 @@ class DB {
 	}
 
 	/**
+	 * Decisions recorded in the last days, by type.
+	 *
+	 * @param int $days Number of days.
+	 * @return array<string,int> accepted / declined / custom => count.
+	 */
+	public function decision_counts( $days ) {
+		global $wpdb;
+
+		// Rows store site-local time (current_time( 'mysql' )), so compare in the site timezone.
+		$since = wp_date( 'Y-m-d H:i:s', time() - max( 1, absint( $days ) ) * DAY_IN_SECONDS );
+		$rows  = $wpdb->get_results(
+			$wpdb->prepare( 'SELECT decision, COUNT(*) AS total FROM %i WHERE consent_date >= %s GROUP BY decision', $this->table_name, $since )
+		);
+
+		$counts = array_fill_keys( ConsentManager::DECISIONS, 0 );
+		foreach ( (array) $rows as $row ) {
+			if ( isset( $counts[ $row->decision ] ) ) {
+				$counts[ $row->decision ] = (int) $row->total;
+			}
+		}
+		return $counts;
+	}
+
+	/**
 	 * Fetch a page of rows.
 	 *
 	 * @param array  $filters Filters.

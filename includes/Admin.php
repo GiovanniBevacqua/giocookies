@@ -100,7 +100,9 @@ class Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'giocookies-admin', GIOCOOKIES_URL . 'assets/css/admin.css', array( 'wp-color-picker' ), Plugin::asset_version( 'assets/css/admin.css' ) );
+		// The frontend stylesheet drives the live preview, so it matches the real banner.
+		wp_enqueue_style( 'giocookies-style', GIOCOOKIES_URL . 'assets/css/style.css', array(), Plugin::asset_version( 'assets/css/style.css' ) );
+		wp_enqueue_style( 'giocookies-admin', GIOCOOKIES_URL . 'assets/css/admin.css', array( 'wp-color-picker', 'giocookies-style' ), Plugin::asset_version( 'assets/css/admin.css' ) );
 		wp_enqueue_script( 'giocookies-admin', GIOCOOKIES_URL . 'assets/js/admin.js', array( 'jquery', 'wp-color-picker' ), Plugin::asset_version( 'assets/js/admin.js' ), true );
 	}
 

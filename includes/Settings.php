@@ -244,143 +244,592 @@ class Settings {
 			);
 		}
 
-		$sections = array(
-			'giocookies_general'    => array( __( 'General', 'giocookies' ), array( $this, 'section_general' ) ),
-			'giocookies_categories' => array( __( 'Categories', 'giocookies' ), array( $this, 'section_categories' ) ),
-			'giocookies_texts'      => array( __( 'Banner texts', 'giocookies' ), array( $this, 'section_texts' ) ),
-			'giocookies_links'      => array( __( 'Policy links', 'giocookies' ), null ),
-			'giocookies_appearance' => array( __( 'Appearance', 'giocookies' ), array( $this, 'section_appearance' ) ),
-			'giocookies_log'        => array( __( 'Consent log', 'giocookies' ), array( $this, 'section_log' ) ),
-			'giocookies_advanced'   => array( __( 'Uninstall', 'giocookies' ), null ),
-		);
-		foreach ( $sections as $id => $section ) {
-			add_settings_section( $id, $section[0], $section[1], self::PAGE );
-		}
-
-		$texts = self::text_defaults();
-
-		$this->field( 'giocookies_enable', __( 'Enable banner', 'giocookies' ), 'giocookies_general', 'checkbox', array( 'label' => __( 'Show the cookie banner and apply Consent Mode defaults on the frontend.', 'giocookies' ) ) );
-		$this->field(
-			'giocookies_consent_version',
-			__( 'Consent version', 'giocookies' ),
-			'giocookies_general',
-			'text',
-			array(
-				'class'       => 'small-text giocookies-version',
-				'description' => __( 'Optional. Change this value (for example from 1 to 2) when your cookie policy changes: visitors whose stored choice has a different version will see the banner again. Letters, numbers, dots, dashes and underscores only.', 'giocookies' ),
-			)
-		);
-
-		$this->field( 'giocookies_cat_analytics', __( 'Analytics', 'giocookies' ), 'giocookies_categories', 'checkbox', array( 'label' => __( 'Ask consent for analytics cookies (Consent Mode: analytics_storage).', 'giocookies' ) ) );
-		$this->field( 'giocookies_cat_marketing', __( 'Marketing', 'giocookies' ), 'giocookies_categories', 'checkbox', array( 'label' => __( 'Ask consent for marketing cookies (Consent Mode: ad_storage, ad_user_data, ad_personalization).', 'giocookies' ) ) );
-
-		$this->field( 'giocookies_title', __( 'Title', 'giocookies' ), 'giocookies_texts', 'text', array( 'placeholder' => $texts['giocookies_title'] ) );
-		$this->field(
-			'giocookies_message',
-			__( 'Message', 'giocookies' ),
-			'giocookies_texts',
-			'textarea',
-			array(
-				'placeholder' => $texts['giocookies_message'],
-				'description' => __( 'Allowed HTML: a, strong, em, br.', 'giocookies' ),
-			)
-		);
-		$this->field( 'giocookies_label_reject', __( '"Reject all" button', 'giocookies' ), 'giocookies_texts', 'text', array( 'placeholder' => $texts['giocookies_label_reject'] ) );
-		$this->field( 'giocookies_label_accept', __( '"Accept all" button', 'giocookies' ), 'giocookies_texts', 'text', array( 'placeholder' => $texts['giocookies_label_accept'] ) );
-		$this->field( 'giocookies_label_save', __( '"Save choices" button', 'giocookies' ), 'giocookies_texts', 'text', array( 'placeholder' => $texts['giocookies_label_save'] ) );
-		$this->field( 'giocookies_label_customize', __( '"Customize" button', 'giocookies' ), 'giocookies_texts', 'text', array( 'placeholder' => $texts['giocookies_label_customize'] ) );
-		$this->field( 'giocookies_label_necessary', __( 'Necessary: name', 'giocookies' ), 'giocookies_texts', 'text', array( 'placeholder' => $texts['giocookies_label_necessary'] ) );
-		$this->field( 'giocookies_label_analytics', __( 'Analytics: name', 'giocookies' ), 'giocookies_texts', 'text', array( 'placeholder' => $texts['giocookies_label_analytics'] ) );
-		$this->field( 'giocookies_label_marketing', __( 'Marketing: name', 'giocookies' ), 'giocookies_texts', 'text', array( 'placeholder' => $texts['giocookies_label_marketing'] ) );
-		$this->field( 'giocookies_desc_necessary', __( 'Necessary: description', 'giocookies' ), 'giocookies_texts', 'textarea', array( 'placeholder' => $texts['giocookies_desc_necessary'], 'rows' => 2 ) );
-		$this->field( 'giocookies_desc_analytics', __( 'Analytics: description', 'giocookies' ), 'giocookies_texts', 'textarea', array( 'placeholder' => $texts['giocookies_desc_analytics'], 'rows' => 2 ) );
-		$this->field( 'giocookies_desc_marketing', __( 'Marketing: description', 'giocookies' ), 'giocookies_texts', 'textarea', array( 'placeholder' => $texts['giocookies_desc_marketing'], 'rows' => 2 ) );
-
-		$this->field( 'giocookies_privacy_page', __( 'Privacy policy', 'giocookies' ), 'giocookies_links', 'page_or_url', array( 'url_option' => 'giocookies_privacy_url' ) );
-		$this->field( 'giocookies_cookie_page', __( 'Cookie policy', 'giocookies' ), 'giocookies_links', 'page_or_url', array( 'url_option' => 'giocookies_cookie_url' ) );
-
-		$this->field(
-			'giocookies_position',
-			__( 'Position', 'giocookies' ),
-			'giocookies_appearance',
-			'select',
-			array(
-				'choices' => array(
-					'bottom-left'  => __( 'Bottom left card', 'giocookies' ),
-					'bottom-right' => __( 'Bottom right card', 'giocookies' ),
-					'bottom-bar'   => __( 'Bottom bar (full width)', 'giocookies' ),
-				),
-			)
-		);
-		$this->field(
-			'giocookies_show_bubble',
-			__( 'Floating button', 'giocookies' ),
-			'giocookies_appearance',
-			'checkbox',
-			array(
-				'label'       => __( 'Show the floating cookie button that reopens the preferences.', 'giocookies' ),
-				'description' => __( 'If you hide it, give visitors another way to change their choice: the [giocookies_preferences] shortcode or any element with the data-giocookies-open attribute.', 'giocookies' ),
-			)
-		);
-		$this->field( 'giocookies_accent_color', __( 'Accent color', 'giocookies' ), 'giocookies_appearance', 'color', array( 'description' => __( 'Buttons, switches and focus ring. Leave empty to use the stylesheet or theme value.', 'giocookies' ) ) );
-		$this->field( 'giocookies_accent_text', __( 'Button text color', 'giocookies' ), 'giocookies_appearance', 'color', array( 'description' => __( 'Text color on accent buttons. Leave empty to use the stylesheet or theme value.', 'giocookies' ) ) );
-
-		$this->field( 'giocookies_log_enabled', __( 'Log consent', 'giocookies' ), 'giocookies_log', 'checkbox', array( 'label' => __( 'Store each choice in the consent log (anonymized IP, consent ID, choices, version, date).', 'giocookies' ) ) );
-		$this->field(
-			'giocookies_log_retention',
-			__( 'Retention (days)', 'giocookies' ),
-			'giocookies_log',
-			'number',
-			array(
-				'min'         => 1,
-				'max'         => 3650,
-				'description' => __( 'Log entries older than this are deleted automatically once a day.', 'giocookies' ),
-			)
-		);
-
-		$this->field( 'giocookies_remove_data', __( 'Remove data', 'giocookies' ), 'giocookies_advanced', 'checkbox', array( 'label' => __( 'Delete all GioCookies settings and the consent log when the plugin is deleted.', 'giocookies' ) ) );
 	}
 
 	/**
-	 * Shorthand for add_settings_field().
+	 * Settings page tabs.
 	 *
-	 * @param string $name    Option name.
-	 * @param string $title   Field title.
-	 * @param string $section Section id.
-	 * @param string $type    Field type.
-	 * @param array  $args    Extra args.
+	 * @return array<string, string> Slug => label.
 	 */
-	private function field( $name, $title, $section, $type, $args = array() ) {
+	public static function tabs() {
+		return array(
+			'overview'   => __( 'Overview', 'giocookies' ),
+			'banner'     => __( 'Banner', 'giocookies' ),
+			'categories' => __( 'Categories', 'giocookies' ),
+			'appearance' => __( 'Appearance', 'giocookies' ),
+			'privacy'    => __( 'Privacy', 'giocookies' ),
+			'advanced'   => __( 'Advanced', 'giocookies' ),
+		);
+	}
+
+	/**
+	 * Tabs that show the live banner preview next to the fields.
+	 *
+	 * @var string[]
+	 */
+	const PREVIEW_TABS = array( 'banner', 'categories', 'appearance' );
+
+	/**
+	 * Tab requested in the URL (falls back to the overview).
+	 *
+	 * @return string
+	 */
+	private static function current_tab() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only navigation.
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : '';
+		return array_key_exists( $tab, self::tabs() ) ? $tab : 'overview';
+	}
+
+	/**
+	 * URL of a settings tab.
+	 *
+	 * @param string $tab Tab slug.
+	 * @return string
+	 */
+	public static function tab_url( $tab ) {
+		return add_query_arg(
+			array(
+				'page' => self::PAGE,
+				'tab'  => $tab,
+			),
+			admin_url( 'admin.php' )
+		);
+	}
+
+	/**
+	 * Settings page markup: one form, one panel per tab.
+	 * Without JavaScript every panel is shown, one after the other.
+	 */
+	public function settings_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$current = self::current_tab();
+		?>
+		<div class="wrap giocookies-admin" data-current-tab="<?php echo esc_attr( $current ); ?>">
+			<h1 class="giocookies-admin__title"><?php esc_html_e( 'GioCookies', 'giocookies' ); ?></h1>
+			<?php settings_errors(); ?>
+
+			<nav class="nav-tab-wrapper giocookies-tabs" role="tablist" aria-label="<?php esc_attr_e( 'GioCookies settings', 'giocookies' ); ?>">
+				<?php foreach ( self::tabs() as $slug => $label ) : ?>
+					<a href="<?php echo esc_url( self::tab_url( $slug ) ); ?>" id="giocookies-tab-<?php echo esc_attr( $slug ); ?>" class="nav-tab<?php echo $slug === $current ? ' nav-tab-active' : ''; ?>" role="tab" aria-controls="giocookies-panel-<?php echo esc_attr( $slug ); ?>" aria-selected="<?php echo $slug === $current ? 'true' : 'false'; ?>" data-tab="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $label ); ?></a>
+				<?php endforeach; ?>
+			</nav>
+
+			<form method="post" action="options.php" class="giocookies-form">
+				<?php settings_fields( self::GROUP ); ?>
+				<div class="giocookies-layout<?php echo in_array( $current, self::PREVIEW_TABS, true ) ? ' has-preview' : ''; ?>">
+					<div class="giocookies-panels">
+						<?php
+						foreach ( array_keys( self::tabs() ) as $slug ) {
+							printf(
+								'<section id="giocookies-panel-%1$s" class="giocookies-panel" role="tabpanel" aria-labelledby="giocookies-tab-%1$s" data-panel="%1$s" data-preview="%2$s">',
+								esc_attr( $slug ),
+								in_array( $slug, self::PREVIEW_TABS, true ) ? '1' : '0'
+							);
+							printf( '<h2 class="giocookies-panel__heading">%s</h2>', esc_html( self::tabs()[ $slug ] ) );
+							call_user_func( array( $this, 'panel_' . $slug ) );
+							echo '</section>';
+						}
+						?>
+						<div class="giocookies-savebar">
+							<?php submit_button( __( 'Save changes', 'giocookies' ), 'primary', 'submit', false ); ?>
+						</div>
+					</div>
+					<?php $this->render_preview( $current ); ?>
+				</div>
+			</form>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Overview: banner switch, decisions of the last 30 days and setup checklist.
+	 */
+	private function panel_overview() {
+		$enabled = self::is_enabled();
+		?>
+		<div class="giocookies-grid giocookies-grid--2">
+			<div class="giocookies-card">
+				<div class="giocookies-card__head">
+					<h3><?php esc_html_e( 'Cookie banner', 'giocookies' ); ?></h3>
+					<span class="giocookies-pill <?php echo $enabled ? 'is-on' : 'is-off'; ?>"><?php echo $enabled ? esc_html__( 'Active', 'giocookies' ) : esc_html__( 'Off', 'giocookies' ); ?></span>
+				</div>
+				<?php
+				$this->field(
+					'giocookies_enable',
+					'',
+					'checkbox',
+					array( 'label' => __( 'Show the cookie banner and print the Google Consent Mode v2 defaults on the frontend.', 'giocookies' ) )
+				);
+				?>
+				<p class="description"><?php esc_html_e( 'When visitors decide, GioCookies updates Consent Mode and sends a cookie_consent_update event to the dataLayer.', 'giocookies' ); ?></p>
+			</div>
+
+			<div class="giocookies-card">
+				<div class="giocookies-card__head">
+					<h3><?php esc_html_e( 'Last 30 days', 'giocookies' ); ?></h3>
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=' . Admin::LOG_PAGE ) ); ?>"><?php esc_html_e( 'Consent log', 'giocookies' ); ?></a>
+				</div>
+				<?php $this->render_stats(); ?>
+			</div>
+		</div>
+
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Setup checklist', 'giocookies' ); ?></h3>
+			<ul class="giocookies-checklist">
+				<?php
+				foreach ( $this->checklist() as $item ) {
+					printf(
+						'<li class="%1$s"><span class="dashicons %2$s" aria-hidden="true"></span><span><strong>%3$s</strong> %4$s</span>%5$s</li>',
+						$item['ok'] ? 'is-ok' : 'is-todo',
+						$item['ok'] ? 'dashicons-yes-alt' : 'dashicons-marker',
+						esc_html( $item['label'] ),
+						esc_html( $item['text'] ),
+						$item['tab'] ? sprintf( ' <a href="%1$s" data-tab-link="%2$s">%3$s</a>', esc_url( self::tab_url( $item['tab'] ) ), esc_attr( $item['tab'] ), esc_html__( 'Edit', 'giocookies' ) ) : ''
+					);
+				}
+				?>
+			</ul>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Checklist items for the overview.
+	 *
+	 * @return array<int, array{label:string,text:string,ok:bool,tab:string}>
+	 */
+	private function checklist() {
+		$enabled     = self::is_enabled();
+		$privacy     = self::policy_url( 'privacy' );
+		$cookie      = self::policy_url( 'cookie' );
+		$log         = '1' === (string) self::get( 'giocookies_log_enabled' );
+		$consent_api = function_exists( 'wp_has_consent' ) || class_exists( 'WP_CONSENT_API' );
+
+		return array(
+			array(
+				'label' => __( 'Banner:', 'giocookies' ),
+				'text'  => $enabled ? __( 'shown to visitors.', 'giocookies' ) : __( 'turned off. Turn it on above when the texts and links are ready.', 'giocookies' ),
+				'ok'    => $enabled,
+				'tab'   => '',
+			),
+			array(
+				'label' => __( 'Privacy policy link:', 'giocookies' ),
+				'text'  => $privacy ? $privacy : __( 'not set.', 'giocookies' ),
+				'ok'    => '' !== $privacy,
+				'tab'   => 'privacy',
+			),
+			array(
+				'label' => __( 'Cookie policy link:', 'giocookies' ),
+				'text'  => $cookie ? $cookie : __( 'not set.', 'giocookies' ),
+				'ok'    => '' !== $cookie,
+				'tab'   => 'privacy',
+			),
+			array(
+				'label' => __( 'Consent log:', 'giocookies' ),
+				/* translators: %d: number of days */
+				'text'  => $log ? sprintf( _n( 'on, entries kept for %d day.', 'on, entries kept for %d days.', (int) self::get( 'giocookies_log_retention' ), 'giocookies' ), (int) self::get( 'giocookies_log_retention' ) ) : __( 'off.', 'giocookies' ),
+				'ok'    => $log,
+				'tab'   => 'privacy',
+			),
+			array(
+				'label' => __( 'Google Consent Mode v2:', 'giocookies' ),
+				'text'  => $enabled ? __( 'defaults printed at the top of the page head.', 'giocookies' ) : __( 'inactive while the banner is off.', 'giocookies' ),
+				'ok'    => $enabled,
+				'tab'   => 'advanced',
+			),
+			array(
+				'label' => __( 'WP Consent API:', 'giocookies' ),
+				'text'  => $consent_api ? __( 'detected. Choices are shared with plugins that support it.', 'giocookies' ) : __( 'not installed (optional).', 'giocookies' ),
+				'ok'    => $consent_api,
+				'tab'   => '',
+			),
+		);
+	}
+
+	/**
+	 * Decisions of the last 30 days from the consent log.
+	 */
+	private function render_stats() {
+		if ( '1' !== (string) self::get( 'giocookies_log_enabled' ) ) {
+			echo '<p class="giocookies-empty">' . esc_html__( 'The consent log is off: turn it on in the Privacy tab to see how visitors decide.', 'giocookies' ) . '</p>';
+			return;
+		}
+
+		$counts = Plugin::instance()->db->decision_counts( 30 );
+		$total  = array_sum( $counts );
+		if ( 0 === $total ) {
+			echo '<p class="giocookies-empty">' . esc_html__( 'No decisions recorded yet.', 'giocookies' ) . '</p>';
+			return;
+		}
+
+		$labels = array(
+			'accepted' => __( 'Accepted all', 'giocookies' ),
+			'declined' => __( 'Rejected all', 'giocookies' ),
+			'custom'   => __( 'Custom choice', 'giocookies' ),
+		);
+		/* translators: %s: number of decisions */
+		printf( '<p class="giocookies-stats__total">%s</p>', esc_html( sprintf( _n( '%s decision', '%s decisions', $total, 'giocookies' ), number_format_i18n( $total ) ) ) );
+		echo '<ul class="giocookies-stats">';
+		foreach ( $labels as $key => $label ) {
+			$count   = isset( $counts[ $key ] ) ? (int) $counts[ $key ] : 0;
+			$percent = (int) round( $count / $total * 100 );
+			printf(
+				'<li class="giocookies-stats__row is-%1$s"><span class="giocookies-stats__label">%2$s</span><span class="giocookies-stats__bar" aria-hidden="true"><span style="width:%3$d%%"></span></span><span class="giocookies-stats__value">%3$d%% <small>(%4$s)</small></span></li>',
+				esc_attr( $key ),
+				esc_html( $label ),
+				(int) $percent,
+				esc_html( number_format_i18n( $count ) )
+			);
+		}
+		echo '</ul>';
+	}
+
+	/**
+	 * Banner texts.
+	 */
+	private function panel_banner() {
+		$texts = self::text_defaults();
+		?>
+		<p class="giocookies-panel__intro"><?php esc_html_e( 'Leave a field empty to use the default text shown in grey: it follows the site language and is translated automatically.', 'giocookies' ); ?></p>
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Message', 'giocookies' ); ?></h3>
+			<?php
+			$this->field( 'giocookies_title', __( 'Title', 'giocookies' ), 'text', array( 'placeholder' => $texts['giocookies_title'] ) );
+			$this->field(
+				'giocookies_message',
+				__( 'Text', 'giocookies' ),
+				'textarea',
+				array(
+					'placeholder' => $texts['giocookies_message'],
+					'rows'        => 4,
+					'description' => __( 'Allowed HTML: a, strong, em, br.', 'giocookies' ),
+				)
+			);
+			?>
+		</div>
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Buttons', 'giocookies' ); ?></h3>
+			<div class="giocookies-grid giocookies-grid--2">
+				<?php
+				$this->field( 'giocookies_label_reject', __( 'Reject all', 'giocookies' ), 'text', array( 'placeholder' => $texts['giocookies_label_reject'] ) );
+				$this->field( 'giocookies_label_accept', __( 'Accept all', 'giocookies' ), 'text', array( 'placeholder' => $texts['giocookies_label_accept'] ) );
+				$this->field( 'giocookies_label_customize', __( 'Customize', 'giocookies' ), 'text', array( 'placeholder' => $texts['giocookies_label_customize'] ) );
+				$this->field( 'giocookies_label_save', __( 'Save choices', 'giocookies' ), 'text', array( 'placeholder' => $texts['giocookies_label_save'] ) );
+				?>
+			</div>
+			<p class="description"><?php esc_html_e( '"Reject all" and "Accept all" always have the same size and weight, as required by EU consent guidelines.', 'giocookies' ); ?></p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Categories: switch, name and description together for each category.
+	 */
+	private function panel_categories() {
+		$texts      = self::text_defaults();
+		$categories = array(
+			'necessary' => array( '', __( 'Always active: these cookies keep the site working and do not need consent.', 'giocookies' ), '' ),
+			'analytics' => array( 'giocookies_cat_analytics', __( 'Consent Mode: analytics_storage.', 'giocookies' ), __( 'Ask consent for analytics cookies', 'giocookies' ) ),
+			'marketing' => array( 'giocookies_cat_marketing', __( 'Consent Mode: ad_storage, ad_user_data, ad_personalization.', 'giocookies' ), __( 'Ask consent for marketing cookies', 'giocookies' ) ),
+		);
+		?>
+		<p class="giocookies-panel__intro"><?php esc_html_e( 'Turn off the categories your site does not use: they disappear from the banner and stay denied in Consent Mode. "Accept all" only grants the categories that are on.', 'giocookies' ); ?></p>
+		<?php foreach ( $categories as $key => $category ) : ?>
+			<?php
+			$switch = $category[0];
+			$on     = '' === $switch || '1' === (string) self::get( $switch );
+			?>
+			<div class="giocookies-card giocookies-category<?php echo $on ? '' : ' is-disabled'; ?>" data-category="<?php echo esc_attr( $key ); ?>">
+				<div class="giocookies-card__head">
+					<h3><?php echo esc_html( $texts[ 'giocookies_label_' . $key ] ); ?></h3>
+					<?php if ( $switch ) : ?>
+						<?php
+						$this->field(
+							$switch,
+							'',
+							'checkbox',
+							array(
+								'label'    => $category[2],
+								'compact'  => true,
+								'category' => $key,
+							)
+						);
+						?>
+					<?php else : ?>
+						<span class="giocookies-pill is-on"><?php esc_html_e( 'Always active', 'giocookies' ); ?></span>
+					<?php endif; ?>
+				</div>
+				<p class="description"><?php echo esc_html( $category[1] ); ?></p>
+				<div class="giocookies-category__fields">
+					<?php
+					$this->field( 'giocookies_label_' . $key, __( 'Name in the banner', 'giocookies' ), 'text', array( 'placeholder' => $texts[ 'giocookies_label_' . $key ] ) );
+					$this->field(
+						'giocookies_desc_' . $key,
+						__( 'Description', 'giocookies' ),
+						'textarea',
+						array(
+							'placeholder' => $texts[ 'giocookies_desc_' . $key ],
+							'rows'        => 2,
+						)
+					);
+					?>
+				</div>
+			</div>
+		<?php endforeach; ?>
+		<?php
+	}
+
+	/**
+	 * Appearance: position, floating button and colors.
+	 */
+	private function panel_appearance() {
+		$position  = self::get( 'giocookies_position' );
+		$positions = array(
+			'bottom-left'  => __( 'Card, bottom left', 'giocookies' ),
+			'bottom-right' => __( 'Card, bottom right', 'giocookies' ),
+			'bottom-bar'   => __( 'Bar, full width', 'giocookies' ),
+		);
+		?>
+		<div class="giocookies-card">
+			<fieldset>
+				<legend><h3><?php esc_html_e( 'Position', 'giocookies' ); ?></h3></legend>
+				<div class="giocookies-positions">
+					<?php foreach ( $positions as $key => $label ) : ?>
+						<label class="giocookies-position">
+							<input type="radio" name="giocookies_position" value="<?php echo esc_attr( $key ); ?>" <?php checked( $position, $key ); ?> data-gc-position />
+							<span class="giocookies-position__thumb is-<?php echo esc_attr( $key ); ?>" aria-hidden="true"><span></span></span>
+							<span class="giocookies-position__label"><?php echo esc_html( $label ); ?></span>
+						</label>
+					<?php endforeach; ?>
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Floating button', 'giocookies' ); ?></h3>
+			<?php
+			$this->field(
+				'giocookies_show_bubble',
+				'',
+				'checkbox',
+				array(
+					'label'       => __( 'Show the floating cookie button that reopens the preferences.', 'giocookies' ),
+					'description' => __( 'If you hide it, give visitors another way to change their choice: the [giocookies_preferences] shortcode or any element with the data-giocookies-open attribute.', 'giocookies' ),
+				)
+			);
+			?>
+		</div>
+
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Colors', 'giocookies' ); ?></h3>
+			<div class="giocookies-grid giocookies-grid--2">
+				<?php
+				$this->field( 'giocookies_accent_color', __( 'Accent', 'giocookies' ), 'color', array( 'description' => __( 'Buttons, switches and focus ring.', 'giocookies' ) ) );
+				$this->field( 'giocookies_accent_text', __( 'Button text', 'giocookies' ), 'color', array( 'description' => __( 'Text on the accent buttons.', 'giocookies' ) ) );
+				?>
+			</div>
+			<p class="description"><?php esc_html_e( 'Leave empty to use the plugin or theme colors. Themes can also style the banner with the --giocookies-* CSS custom properties.', 'giocookies' ); ?></p>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Privacy: policy links, consent version and consent log.
+	 */
+	private function panel_privacy() {
+		?>
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Policy links', 'giocookies' ); ?></h3>
+			<p class="description"><?php esc_html_e( 'Shown at the bottom of the banner. Choose a page, or leave "Custom URL" selected and enter an address: a selected page takes precedence.', 'giocookies' ); ?></p>
+			<?php
+			$this->field( 'giocookies_privacy_page', __( 'Privacy policy', 'giocookies' ), 'page_or_url', array( 'url_option' => 'giocookies_privacy_url' ) );
+			$this->field( 'giocookies_cookie_page', __( 'Cookie policy', 'giocookies' ), 'page_or_url', array( 'url_option' => 'giocookies_cookie_url' ) );
+			?>
+		</div>
+
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Consent version', 'giocookies' ); ?></h3>
+			<?php
+			$this->field(
+				'giocookies_consent_version',
+				__( 'Version', 'giocookies' ),
+				'text',
+				array(
+					'class'       => 'small-text giocookies-version',
+					'description' => __( 'Optional. Change this value (for example from 1 to 2) when your cookie policy changes: visitors whose stored choice has a different version will see the banner again. Letters, numbers, dots, dashes and underscores only.', 'giocookies' ),
+				)
+			);
+			?>
+		</div>
+
+		<div class="giocookies-card">
+			<div class="giocookies-card__head">
+				<h3><?php esc_html_e( 'Consent log', 'giocookies' ); ?></h3>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=' . Admin::LOG_PAGE ) ); ?>"><?php esc_html_e( 'View the consent log', 'giocookies' ); ?></a>
+			</div>
+			<?php
+			$this->field( 'giocookies_log_enabled', '', 'checkbox', array( 'label' => __( 'Store each choice: anonymized IP, consent ID, choices, version and date. The full IP address is never stored.', 'giocookies' ) ) );
+			$this->field(
+				'giocookies_log_retention',
+				__( 'Keep entries for (days)', 'giocookies' ),
+				'number',
+				array(
+					'min'         => 1,
+					'max'         => 3650,
+					'description' => __( 'Older entries are deleted automatically once a day.', 'giocookies' ),
+				)
+			);
+			?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Advanced: integration notes and uninstall.
+	 */
+	private function panel_advanced() {
+		?>
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Google Tag Manager', 'giocookies' ); ?></h3>
+			<p><?php esc_html_e( 'Keep the GTM snippet after wp_head(): GioCookies prints the Consent Mode defaults earlier, at the very top of the head. Then choose one of these setups in GTM:', 'giocookies' ); ?></p>
+			<ol class="giocookies-steps">
+				<li><?php esc_html_e( 'In each tag, open Advanced Settings → Consent Settings and require analytics_storage for analytics tags and ad_storage for advertising tags (Meta Pixel, Google Ads, LinkedIn…).', 'giocookies' ); ?></li>
+				<li><?php esc_html_e( 'Or fire tags on the custom event cookie_consent_update with a condition on the Data Layer variable cookie_consent.analytics or cookie_consent.marketing equals true.', 'giocookies' ); ?></li>
+			</ol>
+			<p class="description"><?php esc_html_e( 'Tags that do not check consent fire even when visitors reject: the banner cannot block them on its own.', 'giocookies' ); ?></p>
+		</div>
+
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Blocking scripts without GTM', 'giocookies' ); ?></h3>
+			<p><?php esc_html_e( 'Hard-coded scripts: change the type and add the category. GioCookies runs them after consent.', 'giocookies' ); ?></p>
+			<pre class="giocookies-code"><code>&lt;script type="text/plain" data-giocookies-category="marketing" src="https://example.com/pixel.js"&gt;&lt;/script&gt;</code></pre>
+			<p><?php esc_html_e( 'Enqueued scripts: map their handles in your theme or plugin.', 'giocookies' ); ?></p>
+			<pre class="giocookies-code"><code>add_filter( 'giocookies_blocked_script_handles', function ( $handles ) {
+	$handles['my-analytics'] = 'analytics';
+	return $handles;
+} );</code></pre>
+		</div>
+
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Reopening the banner', 'giocookies' ); ?></h3>
+			<ul class="giocookies-list">
+				<li><?php esc_html_e( 'Shortcode:', 'giocookies' ); ?> <code>[giocookies_preferences label="Cookie settings"]</code></li>
+				<li><?php esc_html_e( 'Any element with the attribute:', 'giocookies' ); ?> <code>data-giocookies-open</code></li>
+				<li><?php esc_html_e( 'JavaScript:', 'giocookies' ); ?> <code>window.GioCookies.open()</code></li>
+			</ul>
+		</div>
+
+		<div class="giocookies-card">
+			<h3><?php esc_html_e( 'Uninstall', 'giocookies' ); ?></h3>
+			<?php $this->field( 'giocookies_remove_data', '', 'checkbox', array( 'label' => __( 'Delete all GioCookies settings and the consent log when the plugin is deleted.', 'giocookies' ) ) ); ?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Live preview of the banner, built with the same classes and stylesheet as the frontend.
+	 *
+	 * @param string $current Current tab.
+	 */
+	private function render_preview( $current ) {
+		$position   = self::get( 'giocookies_position' );
+		$position   = in_array( $position, self::POSITIONS, true ) ? $position : 'bottom-left';
+		$categories = self::categories();
+		$accent     = (string) self::get( 'giocookies_accent_color' );
+		$text       = (string) self::get( 'giocookies_accent_text' );
+		$style      = '';
+		if ( $accent ) {
+			$style .= '--giocookies-accent:' . $accent . ';--giocookies-accent-hover:' . $accent . ';';
+		}
+		if ( $text ) {
+			$style .= '--giocookies-accent-text:' . $text . ';';
+		}
+		?>
+		<aside class="giocookies-preview" aria-label="<?php esc_attr_e( 'Banner preview', 'giocookies' ); ?>">
+			<p class="giocookies-preview__title"><?php esc_html_e( 'Preview', 'giocookies' ); ?></p>
+			<div class="giocookies-preview__frame is-<?php echo esc_attr( $position ); ?><?php echo 'categories' === $current ? ' is-customizing' : ''; ?>" inert>
+				<div class="giocookies-preview__page" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+				<div class="giocookies-banner is-visible giocookies-preview__banner" style="<?php echo esc_attr( $style ); ?>">
+					<p class="giocookies-title" data-gc-out="giocookies_title"><?php echo esc_html( self::text( 'giocookies_title' ) ); ?></p>
+					<p class="giocookies-message" data-gc-out="giocookies_message"><?php echo wp_kses( self::text( 'giocookies_message' ), self::message_allowed_html() ); ?></p>
+					<div class="giocookies-preferences">
+						<?php foreach ( array( 'necessary', 'analytics', 'marketing' ) as $key ) : ?>
+							<div class="giocookies-option" data-gc-category-row="<?php echo esc_attr( $key ); ?>"<?php echo ( 'necessary' !== $key && ! $categories[ $key ] ) ? ' hidden' : ''; ?>>
+								<span class="giocookies-option__text">
+									<strong data-gc-out="giocookies_label_<?php echo esc_attr( $key ); ?>"><?php echo esc_html( self::text( 'giocookies_label_' . $key ) ); ?></strong>
+									<span data-gc-out="giocookies_desc_<?php echo esc_attr( $key ); ?>"><?php echo esc_html( self::text( 'giocookies_desc_' . $key ) ); ?></span>
+								</span>
+								<span class="giocookies-switch<?php echo 'necessary' === $key ? ' is-checked' : ''; ?>"></span>
+							</div>
+						<?php endforeach; ?>
+					</div>
+					<div class="giocookies-actions">
+						<span class="giocookies-btn" data-gc-out="giocookies_label_reject"><?php echo esc_html( self::text( 'giocookies_label_reject' ) ); ?></span>
+						<span class="giocookies-btn" data-gc-out="giocookies_label_accept"><?php echo esc_html( self::text( 'giocookies_label_accept' ) ); ?></span>
+						<span class="giocookies-btn giocookies-btn--outline giocookies-preview__save" data-gc-out="giocookies_label_save"><?php echo esc_html( self::text( 'giocookies_label_save' ) ); ?></span>
+						<span class="giocookies-btn giocookies-btn--link giocookies-preview__customize" data-gc-out="giocookies_label_customize"><?php echo esc_html( self::text( 'giocookies_label_customize' ) ); ?></span>
+					</div>
+					<p class="giocookies-links"><span><?php esc_html_e( 'Privacy Policy', 'giocookies' ); ?></span> <span><?php esc_html_e( 'Cookie Policy', 'giocookies' ); ?></span></p>
+				</div>
+			</div>
+			<p class="description"><?php esc_html_e( 'Updates as you type. Your theme may change fonts and colors on the site.', 'giocookies' ); ?></p>
+		</aside>
+		<?php
+	}
+
+	/**
+	 * One labelled field.
+	 *
+	 * @param string $name  Option name.
+	 * @param string $label Visible label (empty for switches, which carry their own label).
+	 * @param string $type  Field type.
+	 * @param array  $args  Extra args.
+	 */
+	private function field( $name, $label, $type, $args = array() ) {
 		$args['name'] = $name;
 		$args['type'] = $type;
-		if ( ! in_array( $type, array( 'checkbox', 'page_or_url' ), true ) ) {
-			$args['label_for'] = $name;
+		$classes      = 'giocookies-field giocookies-field--' . $type . ( ! empty( $args['compact'] ) ? ' is-compact' : '' );
+
+		echo '<div class="' . esc_attr( $classes ) . '">';
+		if ( '' !== $label ) {
+			if ( 'page_or_url' === $type ) {
+				printf( '<span class="giocookies-field__label">%s</span>', esc_html( $label ) );
+			} else {
+				printf( '<label class="giocookies-field__label" for="%1$s">%2$s</label>', esc_attr( $name ), esc_html( $label ) );
+			}
 		}
-		add_settings_field( $name, $title, array( $this, 'render_field' ), self::PAGE, $section, $args );
+		echo '<div class="giocookies-field__control">';
+		$this->render_field( $args );
+		echo '</div></div>';
 	}
 
 	/**
-	 * Generic field renderer.
+	 * Field control renderer.
 	 *
 	 * @param array $args Field args.
 	 */
 	public function render_field( $args ) {
-		$name  = $args['name'];
-		$value = self::get( $name );
+		$name    = $args['name'];
+		$value   = self::get( $name );
+		$is_text = in_array( $args['type'], array( 'text', 'textarea' ), true ) && ! empty( $args['placeholder'] );
 
 		switch ( $args['type'] ) {
 			case 'checkbox':
 				printf(
-					'<label for="%1$s"><input type="checkbox" id="%1$s" name="%1$s" value="1" %2$s /> %3$s</label>',
+					'<label class="giocookies-toggle" for="%1$s"><input type="checkbox" id="%1$s" name="%1$s" value="1" %2$s%4$s /><span class="giocookies-toggle__track" aria-hidden="true"></span><span class="giocookies-toggle__label">%3$s</span></label>',
 					esc_attr( $name ),
 					checked( (string) $value, '1', false ),
-					esc_html( isset( $args['label'] ) ? $args['label'] : '' )
+					esc_html( isset( $args['label'] ) ? $args['label'] : '' ),
+					! empty( $args['category'] ) ? ' data-gc-category="' . esc_attr( $args['category'] ) . '"' : ''
 				);
 				break;
 
 			case 'textarea':
 				printf(
-					'<textarea id="%1$s" name="%1$s" class="large-text" rows="%2$d" placeholder="%3$s">%4$s</textarea>',
+					'<textarea id="%1$s" name="%1$s" class="large-text" rows="%2$d" placeholder="%3$s" data-gc-in="%1$s">%4$s</textarea>',
 					esc_attr( $name ),
 					isset( $args['rows'] ) ? (int) $args['rows'] : 3,
 					esc_attr( isset( $args['placeholder'] ) ? $args['placeholder'] : '' ),
@@ -398,17 +847,9 @@ class Settings {
 				);
 				break;
 
-			case 'select':
-				printf( '<select id="%1$s" name="%1$s">', esc_attr( $name ) );
-				foreach ( $args['choices'] as $key => $label ) {
-					printf( '<option value="%1$s" %2$s>%3$s</option>', esc_attr( $key ), selected( (string) $value, $key, false ), esc_html( $label ) );
-				}
-				echo '</select>';
-				break;
-
 			case 'color':
 				printf(
-					'<input type="text" id="%1$s" name="%1$s" class="giocookies-color" value="%2$s" maxlength="7" placeholder="#RRGGBB" />',
+					'<input type="text" id="%1$s" name="%1$s" class="giocookies-color" value="%2$s" maxlength="7" placeholder="#RRGGBB" data-gc-color="%1$s" />',
 					esc_attr( $name ),
 					esc_attr( (string) $value )
 				);
@@ -435,12 +876,11 @@ class Settings {
 					esc_attr( (string) self::get( $url_option ) )
 				);
 				echo '</div>';
-				$args['description'] = __( 'Choose a page, or leave "Custom URL" selected and enter an address. A selected page takes precedence.', 'giocookies' );
 				break;
 
 			default:
 				printf(
-					'<input type="text" id="%1$s" name="%1$s" class="%2$s" value="%3$s" placeholder="%4$s" />',
+					'<input type="text" id="%1$s" name="%1$s" class="%2$s" value="%3$s" placeholder="%4$s" data-gc-in="%1$s" />',
 					esc_attr( $name ),
 					esc_attr( isset( $args['class'] ) ? $args['class'] : 'regular-text' ),
 					esc_attr( (string) $value ),
@@ -448,80 +888,18 @@ class Settings {
 				);
 		}
 
+		if ( $is_text ) {
+			printf(
+				'<button type="button" class="button-link giocookies-reset" data-gc-reset="%1$s"%2$s>%3$s</button>',
+				esc_attr( $name ),
+				'' === trim( (string) $value ) ? ' hidden' : '',
+				esc_html__( 'Use the default text', 'giocookies' )
+			);
+		}
+
 		if ( ! empty( $args['description'] ) ) {
 			printf( '<p class="description">%s</p>', esc_html( $args['description'] ) );
 		}
-	}
-
-	/**
-	 * Section intro: general.
-	 */
-	public function section_general() {
-		echo '<p>' . esc_html__( 'GioCookies prints Google Consent Mode v2 defaults in the page head, shows the banner and sends a cookie_consent_update event to the dataLayer when visitors decide.', 'giocookies' ) . '</p>';
-
-		$consent_api = function_exists( 'wp_has_consent' ) || class_exists( 'WP_CONSENT_API' );
-		echo '<p>';
-		if ( $consent_api ) {
-			esc_html_e( 'WP Consent API: detected. Choices are shared with plugins that support it.', 'giocookies' );
-		} else {
-			esc_html_e( 'WP Consent API: not installed (optional). When it is active, choices are shared with plugins that support it.', 'giocookies' );
-		}
-		echo '</p>';
-	}
-
-	/**
-	 * Section intro: texts.
-	 */
-	public function section_categories() {
-		echo '<p>' . esc_html__( 'Turn off the categories your site does not use: they disappear from the banner and stay denied in Consent Mode. "Accept all" only grants the categories that are on.', 'giocookies' ) . '</p>';
-	}
-
-	/**
-	 * Texts section intro.
-	 */
-	public function section_texts() {
-		echo '<p>' . esc_html__( 'Leave a field empty to use the default text shown as placeholder (it follows the site language).', 'giocookies' ) . '</p>';
-	}
-
-	/**
-	 * Section intro: appearance.
-	 */
-	public function section_appearance() {
-		echo '<p>' . esc_html__( 'Themes can also style the banner with the --giocookies-* CSS custom properties.', 'giocookies' ) . '</p>';
-	}
-
-	/**
-	 * Section intro: log.
-	 */
-	public function section_log() {
-		printf(
-			'<p>%1$s <a href="%2$s">%3$s</a></p>',
-			esc_html__( 'The full IP address is never stored.', 'giocookies' ),
-			esc_url( admin_url( 'admin.php?page=' . Admin::LOG_PAGE ) ),
-			esc_html__( 'View the consent log', 'giocookies' )
-		);
-	}
-
-	/**
-	 * Settings page markup.
-	 */
-	public function settings_page() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
-		?>
-		<div class="wrap giocookies-admin">
-			<h1><?php esc_html_e( 'GioCookies Settings', 'giocookies' ); ?></h1>
-			<?php settings_errors(); ?>
-			<form method="post" action="options.php">
-				<?php
-				settings_fields( self::GROUP );
-				do_settings_sections( self::PAGE );
-				submit_button();
-				?>
-			</form>
-		</div>
-		<?php
 	}
 
 	/**

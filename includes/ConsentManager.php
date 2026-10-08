@@ -224,7 +224,7 @@ class ConsentManager {
 				/**
 				 * Fires at the end of the preferences panel, after the category switches.
 				 *
-				 * @since 1.0.1
+				 * @since 1.0.0
 				 */
 				do_action( 'giocookies_preferences_end' );
 				?>
